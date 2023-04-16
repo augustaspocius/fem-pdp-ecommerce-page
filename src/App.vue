@@ -1,20 +1,22 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Header from './components/Header.vue'
 import Main from './components/Main.vue'
 import MobileMenu from './components/MobileMenu.vue'
 import CartFlyout from './components/CartFlyout.vue';
-import { CartItem } from './types';
+import { CartItemInterface } from './types';
 
 interface DataProps {
   mobileMenuOpen: boolean;
   quantity: number;
   cartOpen: boolean;
-  cartItems: CartItem[];
+  cartItems: CartItemInterface[];
 }
 
 export default defineComponent({
   name: 'App',
   components: {
+    Header,
     Main,
     MobileMenu,
     CartFlyout
@@ -24,12 +26,12 @@ export default defineComponent({
       mobileMenuOpen: false,
       quantity: 0,
       cartOpen: false,
-      cartItems: []
+      cartItems: [],
     }
   },
   computed: {
     totalQuantity(): number {
-      return this.cartItems.reduce((acc: number, item: CartItem) => acc + item.quantity, 0);
+      return this.cartItems.reduce((acc: number, item: CartItemInterface) => acc + item.quantity, 0);
     },
   },
   methods: {
@@ -43,9 +45,10 @@ export default defineComponent({
     },
     addToCart() {
       const newItem = {
-        id: 1, // You can assign a unique ID for each product
+        id: 1,
         name: 'Fall Limited Edition Sneakers',
         price: 125,
+        image: 'image-product-1.jpg', // Add the image file name
         originalPrice: 250,
         discount: 50,
         quantity: this.quantity,
@@ -62,7 +65,7 @@ export default defineComponent({
       }
     },
     handleRemoveFromCart(itemId: number) {
-      this.cartItems = this.cartItems.filter((item: CartItem) => item.id !== itemId);
+      this.cartItems = this.cartItems.filter((item: CartItemInterface) => item.id !== itemId);
     },
   },
 });
@@ -71,35 +74,13 @@ export default defineComponent({
 <template>
   <div class="font-kumbh-sans min-h-screen">
     <MobileMenu :isOpen="mobileMenuOpen" @close="mobileMenuOpen = false" />
-    <header class="py-5 px-6 flex justify-between items-center">
-      <!-- Hamburger menu -->
-      <div class="flex justify-between items-center gap-4">
-        <div class="md:hidden">
-          <button class="flex justify-center items-center" @click="mobileMenuOpen = !mobileMenuOpen">
-            <!-- Add hamburger menu icon here -->
-            <img src="./assets/icon-menu.svg" alt="menu" />
-          </button>
-        </div>
-        <!-- Logo -->
-        <img class="self-center pb-1" src="./assets/logo.svg" alt="sneakers" />
-      </div>
-
-      <!-- Icons -->
-      <div class="flex gap-5">
-        <!-- Cart icon -->
-        <button class="relative" @click="cartOpen = !cartOpen">
-          <img src="./assets/icon-cart.svg" alt="cart" />
-          <span v-if="totalQuantity > 0"
-            class="absolute top-[-3px] right-[-5px] text-white text-[10px] font-bold bg-primary-orange rounded-full w-5 flex items-center justify-center">
-            {{ totalQuantity }}
-          </span>
-        </button>
-        <!-- Profile icon -->
-        <button class="p-1 rounded-full ring-2 ring-transparent hover:ring-primary-orange">
-          <img class="max-w-[1.5rem]" src="./assets/image-avatar.png" alt="avatar" />
-        </button>
-      </div>
-    </header>
+    <Header
+      :mobileMenuOpen="mobileMenuOpen"
+      :cartOpen="cartOpen"
+      :totalQuantity="totalQuantity"
+      @toggle-mobile-menu="mobileMenuOpen = !mobileMenuOpen"
+      @toggle-cart="cartOpen = !cartOpen"
+    />
 
     <main class="container mx-auto">
       <!-- Main content -->

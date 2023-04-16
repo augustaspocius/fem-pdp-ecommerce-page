@@ -1,20 +1,24 @@
 <script lang="ts">
 import { PropType, defineComponent } from 'vue';
-import { CartItem } from '../types';
+import { CartItemInterface } from '../types';
+import CartItem from './CartItem.vue';
 
 export default defineComponent({
+    components: {
+        CartItem
+    },
     props: {
         isOpen: {
             type: Boolean,
             default: false,
         },
         cartItems: {
-            type: Array as PropType<CartItem[]>,
+            type: Array as PropType<CartItemInterface[]>,
             default: () => [],
         },
     },
     methods: {
-        removeFromCart(itemId: number) {
+        removeFromCart(itemId: number) : void {
             this.$emit('remove-item', itemId);
         },
     },
@@ -22,7 +26,7 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="bg-white w-[95%] rounded-lg shadow-md flex flex-col m-auto mt-2" :class="{ 'hidden': !isOpen }">
+    <div class="bg-white w-[95%] rounded-lg shadow-md flex flex-col m-auto mt-2" v-show="isOpen">
         <h2 class="font-bold text-lg mb-2 p-4">Cart</h2>
         <div class="bg-gray-300 h-[1px] mb-6 w-full"></div>
         <div v-if="cartItems.length === 0"
@@ -31,24 +35,7 @@ export default defineComponent({
         </div>
         <template v-if="cartItems.length > 0">
             <ul class="px-4 pb-4">
-                <li v-for="(item, index) in cartItems" :key="index" class="flex items-center justify-between mb-4">
-                    <img class="w-[50px] h-[50px] rounded" src="../assets/image-product-1-thumbnail.jpg" alt="product" />
-                    <div>
-                        <span class="text-neutral-dark-grayish-blue text-[15px]">
-                            {{ item.name }}
-                        </span>
-                        <br />
-                        <div class="flex gap-1 items-center justify-start">
-                            <span class="text-neutral-dark-grayish-blue text-[15px]">
-                                ${{ item.price }} x {{ item.quantity }}
-                            </span>
-                            <p class="inline font-bold">${{ item.price * item.quantity }}</p>
-                        </div>
-                    </div>
-                    <button class="pl-5" @click="removeFromCart(item.id)">
-                        <img src="../assets/icon-delete.svg" alt="delete" />
-                    </button>
-                </li>
+                <CartItem v-for="(item, index) in cartItems" :key="index" :item="item" @remove="removeFromCart" />
             </ul>
             <div class="p-4">
                 <button class="w-full py-5 text-base bg-primary-orange text-white font-bold rounded-xl">
@@ -56,6 +43,7 @@ export default defineComponent({
                 </button>
             </div>
         </template>
-</div></template>
+    </div>
+</template>
 
   
