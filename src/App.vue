@@ -4,6 +4,7 @@ import Header from './components/Header.vue'
 import Main from './components/Main.vue'
 import MobileMenu from './components/MobileMenu.vue'
 import CartFlyout from './components/CartFlyout.vue';
+import ImageSlider from './components/ImageSlider.vue';
 import { CartItemInterface } from './types';
 
 interface DataProps {
@@ -19,7 +20,8 @@ export default defineComponent({
     Header,
     Main,
     MobileMenu,
-    CartFlyout
+    CartFlyout,
+    ImageSlider,
   },
   data(): DataProps {
     return {
@@ -87,21 +89,7 @@ export default defineComponent({
       <div class="grid grid-cols-1">
         <!-- Product image gallery -->
         <div class="relative w-full">
-          <!-- Add your image gallery component here -->
-          <img src="./assets/image-product-1.jpg" alt="product" />
-          <!-- Left button -->
-          <button
-            class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center">
-            <!-- Add left arrow icon here -->
-            <img class="w-3 h-auto" src="./assets/icon-previous.svg" alt="icon previous">
-          </button>
-          <!-- Right button -->
-          <button
-            class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center">
-            <!-- Add right arrow icon here -->
-            <img class="w-3 h-auto" src="./assets/icon-next.svg" alt="icon next">
-          </button>
-
+          <ImageSlider />
           <div class="absolute left-0 right-0 top-0">
             <CartFlyout :isOpen="cartOpen" :cartItems="cartItems" @remove-item="handleRemoveFromCart" />
           </div>
