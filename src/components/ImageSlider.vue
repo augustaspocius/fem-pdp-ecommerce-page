@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  data() {
+  data(): { currentSlide: number, images: string[] } {
     return {
       currentSlide: 0,
       images: [
@@ -11,15 +11,22 @@ export default {
       ],
     };
   },
+  computed: {
+    slideStyles(): { [key: string]: string } {
+      return {
+        transform: `translateX(-${this.currentSlide * 100}%)`,
+      };
+    },
+  },
   methods: {
-    nextSlide() {
+    nextSlide(): void {
       if (this.currentSlide < this.images.length - 1) {
         this.currentSlide++;
       } else {
         this.currentSlide = 0;
       }
     },
-    previousSlide() {
+    previousSlide(): void {
       if (this.currentSlide > 0) {
         this.currentSlide--;
       } else {
@@ -30,10 +37,10 @@ export default {
 };
 </script>
 <template>
-    <div class="relative w-full">
+    <div class="relative w-full overflow-x-hidden">
       <div
         class="w-full whitespace-nowrap transition-all duration-500"
-        :style="`transform: translateX(-${currentSlide * 100}%);`"
+        :style="slideStyles"
       >
         <img
           v-for="(image, index) in images"
