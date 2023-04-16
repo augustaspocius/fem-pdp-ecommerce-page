@@ -1,55 +1,78 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
-import Main from './components/Main.vue'
+import { defineComponent, ref, computed } from 'vue';
+import Header from './components/Header.vue';
+import MobileMenu from './components/MobileMenu.vue';
+import Main from './components/Main.vue';
+import { CartItemInterface } from './types';
 
 export default defineComponent({
-  name: 'App',
+  components: {
+    Header,
+    MobileMenu,
+    Main,
+  },
+  setup() {
+    const cartOpen = ref(false);
+    const mobileMenuOpen = ref(false);
+    const cartItems = ref<CartItemInterface[]>([]);
+
+    const toggleCart = () => {
+      cartOpen.value = !cartOpen.value;
+    };
+
+    const addToCart = (newItem: CartItemInterface) => {
+      const itemIndex = cartItems.value.findIndex(
+        (item) => item.id === newItem.id
+      );
+
+      if (itemIndex !== -1) {
+        cartItems.value[itemIndex].quantity += newItem.quantity;
+      } else {
+        cartItems.value.push(newItem);
+      }
+
+      cartOpen.value = true;
+    };
+
+    const removeFromCart = (itemId: number) => {
+      const itemIndex = cartItems.value.findIndex((item) => item.id === itemId);
+
+      if (itemIndex !== -1) {
+        cartItems.value.splice(itemIndex, 1);
+      }
+    };
+    
+    const totalQuantity = computed(() => {
+      return cartItems.value.reduce((acc: number, item: CartItemInterface) => acc + item.quantity, 0);
+    });
+    
+    return {
+      cartOpen,
+      mobileMenuOpen,
+      cartItems,
+      toggleCart,
+      addToCart,
+      removeFromCart,
+      totalQuantity,
+    };
+  },
 });
 </script>
-
 <template>
-  <div class="font-kumbh-sans bg-neutral-light-grayish-blue min-h-screen">
-    <header class="bg-primary-orange">
-          <!--Nav bar-->
-          Collections
-          Men
-          Women
-          About
-          Contact
-          
-          <!--Logo-->
-          
-          <!--cart icon-->
-          
-          <!--User icon-->
-    </header>
-
-    <main class="container mx-auto px-4 py-6">
-      <!-- Main content -->
-      <!-- Product image gallery, product details, add to cart functionality, etc. -->
-      
-          <!--Brand above the product name-->
-          Sneaker Company
-
-          <!--Product name-->
-          Fall Limited Edition Sneakers
-
-          <!--Product description-->
-          These low-profile sneakers are your perfect casual wear companion. Featuring a 
-          durable rubber outer sole, they’ll withstand everything the weather can offer.
-
-          <!--Discounted price-->
-          $125.00
-          <!--Discount-->
-          50%
-          <!--Original price-->
-          $250.00
-
-          <!--Quantity-->
-          0
-          <!--Add to cart button-->
-          Add to cart
-      <Main/>
-    </main>
+  <div class="font-kumbh-sans min-h-screen">
+    <MobileMenu :isOpen="mobileMenuOpen" @close="mobileMenuOpen = false" />
+    <Header
+      :mobileMenuOpen="mobileMenuOpen"
+      :cartOpen="cartOpen"
+      :totalQuantity="totalQuantity"
+      @toggle-mobile-menu="mobileMenuOpen = !mobileMenuOpen"
+      @toggle-cart="cartOpen = !cartOpen"
+    />
+    <Main
+      :cartOpen="cartOpen"
+      :cartItems="cartItems"
+      @add-to-cart="addToCart"
+      @remove-from-cart="removeFromCart"
+    />
   </div>
 </template>
