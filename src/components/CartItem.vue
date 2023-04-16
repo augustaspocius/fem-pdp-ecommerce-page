@@ -15,18 +15,12 @@ export default defineComponent({
       required: true,
     },
   },
-  methods: {
-    getImagePath(image: string): string {
-        console.log(getImageUrl(image));
-      return getImageUrl(image); // Use the helper function
-    },
-  },
 });
 </script>
 
 <template>
     <li class="flex items-center justify-between">
-    <img class="w-[50px] h-[50px] rounded" :src="getImagePath(item.image)" alt="product" />
+    <img class="w-[50px] h-[50px] rounded" :src="item.image" alt="product" />
       <div>
         <span class="text-neutral-dark-grayish-blue text-[15px]">{{ item.name }}</span>
         <br>
