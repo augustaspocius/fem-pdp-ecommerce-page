@@ -64,9 +64,11 @@ export default defineComponent({
     <Header
       :mobileMenuOpen="mobileMenuOpen"
       :cartOpen="cartOpen"
+      :cartItems="cartItems"
       :totalQuantity="totalQuantity"
       @toggle-mobile-menu="mobileMenuOpen = !mobileMenuOpen"
       @toggle-cart="cartOpen = !cartOpen"
+      @remove-from-cart="removeFromCart"
     />
     <Main
       :cartOpen="cartOpen"
