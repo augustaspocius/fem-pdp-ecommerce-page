@@ -45,7 +45,8 @@ export default {
         <img
           v-for="(image, index) in images"
           :key="index"
-          class="w-full h-full inline-block"
+          class="w-full h-full inline-block 
+                md:rounded-xl"
           :src="image"
           alt="product"
         />
@@ -53,17 +54,31 @@ export default {
   
       <!-- Left button -->
       <button
-        class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center"
+        class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center
+               md:hidden"
         @click="previousSlide"
       >
         <img src="/src/assets/icon-previous.svg" alt="icon previous" />
       </button>
       <!-- Right button -->
       <button
-        class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center"
+        class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center
+               md:hidden"
         @click="nextSlide"
       >
         <img src="/src/assets/icon-next.svg" alt="icon next" />
       </button>
     </div>
+    
+    <div
+        class="hidden w-full md:flex pt-8 gap-8"
+      >
+        <img
+          v-for="(image, index) in images"
+          :key="index"
+          class="w-full max-w-[88px] rounded-xl border-2 border-transparent hover:border-primary-orange hover:cursor-pointer hover:opacity-50"
+          :src="image"
+          alt="product"
+        />
+      </div>
   </template>
