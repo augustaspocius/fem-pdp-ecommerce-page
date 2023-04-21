@@ -59,7 +59,7 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div class="font-kumbh-sans min-h-screen">
+  <div class="container mx-auto max-w-[1110px] w-full font-kumbh-sans min-h-screen">
     <MobileMenu :isOpen="mobileMenuOpen" @close="mobileMenuOpen = false" />
     <Header
       :mobileMenuOpen="mobileMenuOpen"
