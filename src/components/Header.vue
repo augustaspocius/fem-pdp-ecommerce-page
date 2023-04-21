@@ -1,21 +1,38 @@
 <script lang="ts">
     import { defineComponent } from 'vue';
+    import CartFlyout from './CartFlyout.vue';
+    import { CartItemInterface } from '../types';
 
     export default defineComponent({
-    name: 'Header',
-    props: {
-        mobileMenuOpen: Boolean,
-        cartOpen: Boolean,
-        totalQuantity: {
-            type: Number,
-            default: 0,
-        },
-    },
+      components: {CartFlyout},
+      name: 'Header',
+      props: {
+          mobileMenuOpen: Boolean,
+          cartOpen: Boolean,
+          totalQuantity: {
+              type: Number,
+              default: 0,
+          },
+          cartItems: {
+            type: Array as () => CartItemInterface[],
+            required: true,
+          },
+      },
+      setup(props, context) {
+        const handleRemoveFromCart = (itemId: number) => {
+          console.log('remove from cart', itemId);
+          context.emit('remove-from-cart', itemId);
+        };
+
+        return {
+          handleRemoveFromCart,
+        };
+      },
     });
 </script>
 
 <template>
-    <header class="py-5 md:py-0 px-6 flex justify-between items-center">
+    <header class="py-5 md:py-0 px-6 md:px-0 flex justify-between items-center border-b-neutral-grey border-b-2 relative">
       <div class="flex items-center">
         <button class="md:hidden" @click="$emit('toggle-mobile-menu')">
           <img src="../assets/icon-menu.svg" alt="menu" />
@@ -31,7 +48,10 @@
       </div>
 
 
-      <div class="flex items-center gap-5 md:gap-12">
+      <div class="absolute right-[-76px] top-[94px] w-[360px] hidden md:block">
+          <CartFlyout :isOpen="cartOpen" :cartItems="cartItems" @remove-item="handleRemoveFromCart" />
+      </div>
+      <div class="flex items-center gap-5 md:gap-12 ">
         <button class="relative" @click="$emit('toggle-cart')">
           <img src="../assets/icon-cart.svg" alt="cart" />
           <span
