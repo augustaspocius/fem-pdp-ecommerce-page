@@ -32,7 +32,7 @@
 </script>
 
 <template>
-    <header class="py-5 md:py-0 px-6 md:px-0 flex justify-between items-center border-b-neutral-grey border-b-2 relative">
+    <header class="py-5 md:py-0 px-6 md:px-0 flex justify-between items-center border-b-neutral-grey border-b-2 relative mx-4">
       <div class="flex items-center">
         <button class="md:hidden" @click="$emit('toggle-mobile-menu')">
           <img src="../assets/icon-menu.svg" alt="menu" />

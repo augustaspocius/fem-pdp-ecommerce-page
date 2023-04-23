@@ -102,17 +102,17 @@ export default defineComponent({
           <div class="flex flex-col md:flex-row gap-4">
             <div class="flex justify-between items-center bg-neutral-greyish-white border-0 rounded-xl
                 py-[22px] px-[24px] md:p-0">
-              <button @click="decrementQuantity" class="text-primary-orange px-3 py-4">
-                <img src="/src/assets/icon-minus.svg" alt="icon minus">
+              <button @click="decrementQuantity" class="text-primary-orange px-3 md:py-4">
+                <img class="min-w-[12px]" src="/src/assets/icon-minus.svg" alt="icon minus">
               </button>
               <input type="number" class="w-full text-center bg-transparent font-bold" v-model="quantity" min="0" />
-              <button @click="incrementQuantity" class="text-primary-orange px-3">
-                <img src="/src/assets/icon-plus.svg" alt="icon plus">
+              <button @click="incrementQuantity" class="text-primary-orange px-3 md:py-4">
+                <img class="min-w-[12px]" src="/src/assets/icon-plus.svg" alt="icon plus">
               </button>
             </div>
             
             <button @click="addToCart"
-              class="w-full bg-primary-orange text-white font-bold py-[19px] rounded-xl flex justify-center items-center gap-1 button-shadow">
+              class="w-full bg-primary-orange text-white font-bold py-[19px] rounded-xl flex justify-center items-center gap-1 button-shadow hover:opacity-75">
               <img class="w-4 filter sepia-0 saturate-0 brightness-200 contrast-200 hue-rotate-15"
                 src="/src/assets/icon-cart.svg" alt="cart" />
               <span class="ml-2">Add to cart</span>
