@@ -58,7 +58,7 @@ export default {
     @next-slide="nextSlide" @previous-slide="previousSlide" @select-thumbnail="selectThumbnail" />
 
   <div class="relative w-full overflow-x-hidden">
-    <div class="w-full whitespace-nowrap transition-all duration-500" :style="slideStyles">
+    <div class="w-full whitespace-nowrap" :style="slideStyles">
       <img v-for="(image, index) in images" :key="index" class="w-full h-full inline-block 
                   md:rounded-xl cursor-pointer" :src="image" alt="product" @click="openLightbox" />
     </div>
