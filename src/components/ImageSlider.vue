@@ -1,7 +1,12 @@
 <script lang="ts">
+import Lightbox from './Lightbox.vue';
 export default {
-  data(): { currentSlide: number, images: string[] } {
+  components: {
+    Lightbox,
+  },
+  data(): { lightboxOpen: boolean, currentSlide: number, images: string[] } {
     return {
+      lightboxOpen: false,
       currentSlide: 0,
       images: [
         "/src/assets/image-product-1.jpg",
@@ -19,6 +24,14 @@ export default {
     },
   },
   methods: {
+    openLightbox() {
+      this.lightboxOpen = true;
+    },
+
+    selectThumbnail(index: number) {
+      this.currentSlide = index;
+    },
+
     nextSlide(): void {
       if (this.currentSlide < this.images.length - 1) {
         this.currentSlide++;
@@ -26,6 +39,7 @@ export default {
         this.currentSlide = 0;
       }
     },
+
     previousSlide(): void {
       if (this.currentSlide > 0) {
         this.currentSlide--;
@@ -40,48 +54,31 @@ export default {
 };
 </script>
 <template>
+  <Lightbox :current-slide="currentSlide" :images="images" :is-open="lightboxOpen" @close="lightboxOpen = false"
+    @next-slide="nextSlide" @previous-slide="previousSlide" @select-thumbnail="selectThumbnail" />
+
   <div class="relative w-full overflow-x-hidden">
-    <div
-      class="w-full whitespace-nowrap transition-all duration-500"
-      :style="slideStyles"
-    >
-      <img
-        v-for="(image, index) in images"
-        :key="index"
-        class="w-full h-full inline-block 
-              md:rounded-xl"
-        :src="image"
-        alt="product"
-      />
+    <div class="w-full whitespace-nowrap transition-all duration-500" :style="slideStyles">
+      <img v-for="(image, index) in images" :key="index" class="w-full h-full inline-block 
+                  md:rounded-xl cursor-pointer" :src="image" alt="product" @click="openLightbox" />
     </div>
 
     <!-- Left button -->
-    <button
-      class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center
-             md:hidden"
-      @click="previousSlide"
-    >
+    <button class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center
+                 md:hidden" @click="previousSlide">
       <img src="/src/assets/icon-previous.svg" alt="icon previous" />
     </button>
     <!-- Right button -->
-    <button
-      class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center
-             md:hidden"
-      @click="nextSlide"
-    >
+    <button class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center
+                 md:hidden" @click="nextSlide">
       <img src="/src/assets/icon-next.svg" alt="icon next" />
     </button>
   </div>
 
   <div class="hidden w-full md:flex pt-8 gap-8">
-    <img
-      v-for="(image, index) in images"
-      :key="index"
-      class="w-full max-w-[88px] rounded-xl border-2 border-transparent hover:cursor-pointer hover:opacity-50"
-      :class="{ 'border-primary-orange opacity-50': currentSlide === index }"
-      :src="image"
-      alt="product"
-      @click="selectSlide(index)"
-    />
+    <img v-for="(image, index) in images" :key="index"
+      class="w-full max-w-[88px] rounded-xl border-2 border-transparent hover:cursor-pointer hover:opacity-50 transition-opacity"
+      :class="{ 'border-x-primary-orange border-y-primary-orange opacity-50 border-opacity-100 ': currentSlide === index }"
+      :src="image" alt="product" @click="selectSlide(index)" />
   </div>
 </template>
