@@ -55,7 +55,7 @@ export default {
 </script>
 <template>
   <Lightbox :current-slide="currentSlide" :images="images" :is-open="lightboxOpen" @close="lightboxOpen = false"
-    @next-slide="nextSlide" @previous-slide="previousSlide" @select-thumbnail="selectThumbnail" />
+    @nextSlide="nextSlide" @previousSlide="previousSlide" @selectThumbnail="selectThumbnail" />
 
   <div class="relative w-full overflow-x-hidden">
     <div class="w-full whitespace-nowrap" :style="slideStyles">

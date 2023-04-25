@@ -14,13 +14,13 @@ export default {
     },
     methods: {
         nextSlide() {
-            this.$emit("next-slide");
+            this.$emit("nextSlide");
         },
         previousSlide() {
-            this.$emit("previous-slide");
+            this.$emit("previousSlide");
         },
         selectThumbnail(index: number) {
-            this.$emit("select-thumbnail", index);
+            this.$emit("selectThumbnail", index);
         },
     },
 };
