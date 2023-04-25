@@ -19,7 +19,7 @@ export default defineComponent({
     },
     methods: {
         removeFromCart(itemId: number) : void {
-            this.$emit('remove-item', itemId);
+            this.$emit('removeItem', itemId);
         },
     },
 

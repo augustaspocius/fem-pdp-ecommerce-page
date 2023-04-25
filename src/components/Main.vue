@@ -43,11 +43,11 @@ export default defineComponent({
         quantity: quantity.value,
       };
       
-      context.emit('add-to-cart', newItem);
+      context.emit('addToCart', newItem);
     };
 
     const handleRemoveFromCart = (itemId: number) => {
-      context.emit('remove-from-cart', itemId);
+      context.emit('removeFromCart', itemId);
     };
 
     return {
@@ -66,7 +66,7 @@ export default defineComponent({
         <div class="relative w-full md:max-w-md">
           <ImageSlider />
           <div class="absolute left-0 right-0 top-0 md:hidden">
-            <CartFlyout :isOpen="cartOpen" :cartItems="cartItems" @remove-item="handleRemoveFromCart" />
+            <CartFlyout :isOpen="cartOpen" :cartItems="cartItems" @removeItem="handleRemoveFromCart" />
           </div>
         </div>
 
@@ -101,12 +101,12 @@ export default defineComponent({
 
           <div class="flex flex-col md:flex-row gap-4">
             <div class="flex justify-between items-center bg-neutral-greyish-white border-0 rounded-xl
-                py-[22px] px-[24px] md:p-0">
-              <button @click="decrementQuantity" class="text-primary-orange px-3 md:py-4">
+                px-[24px] md:p-0">
+              <button @click="decrementQuantity" class="text-primary-orange px-3 py-6 md:py-4">
                 <img class="min-w-[12px]" src="/src/assets/icon-minus.svg" alt="icon minus">
               </button>
               <input type="number" class="w-full text-center bg-transparent font-bold" v-model="quantity" min="0" />
-              <button @click="incrementQuantity" class="text-primary-orange px-3 md:py-4">
+              <button @click="incrementQuantity" class="text-primary-orange px-3 py-6 md:py-4">
                 <img class="min-w-[12px]" src="/src/assets/icon-plus.svg" alt="icon plus">
               </button>
             </div>
