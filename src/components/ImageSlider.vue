@@ -25,7 +25,7 @@ export default {
   },
   setup() {
     const openLightbox = (lightboxOpen: boolean): boolean => {
-      return !lightboxOpen;
+      return window.innerWidth > 768 ? !lightboxOpen : false;
     };
     
     const nextSlide = (currentSlide: number, images: string[]): number => {
@@ -59,7 +59,7 @@ export default {
   <div class="relative w-full overflow-x-hidden">
     <div class="w-full whitespace-nowrap" :style="slideStyles">
       <img v-for="(image, index) in images" :key="index" class="w-full h-full inline-block 
-                  md:rounded-xl cursor-pointer" :src="image" alt="product" @click="lightboxOpen = openLightbox(lightboxOpen)" />
+                  md:rounded-xl md:cursor-pointer" :src="image" alt="product" @click="lightboxOpen = openLightbox(lightboxOpen)" />
     </div>
 
     <!-- Left button -->
@@ -84,7 +84,7 @@ export default {
     <img
       v-for="(image, index) in images"
       :key="index"
-      class="w-full max-w-[88px] rounded-xl border-2 border-transparent hover:cursor-pointer hover:opacity-50"
+      class="w-full min-w-0 rounded-xl border-2 border-transparent hover:cursor-pointer hover:opacity-50"
       :class="{ 'border-primary-orange opacity-50': currentSlide === index }"
       :src="image"
       alt="product"

@@ -61,7 +61,7 @@ export default {
             <div
                 class="absolute bottom-[-10] left-1/2 transform -translate-x-1/2 w-full flex justify-center items-center space-x-8 py-8">
                 <div v-for="(image, index) in images" :key="index"
-                    class="relative w-full max-w-[88px] rounded-xl cursor-pointer overflow-hidden"
+                    class="relative w-full min-w-0 rounded-xl cursor-pointer overflow-hidden"
                     @click="selectThumbnail(index)">
                     <img :class="[
                         'w-full ',
