@@ -59,20 +59,22 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div class="font-kumbh-sans min-h-screen">
+  <div class="container mx-auto max-w-[1110px] w-full font-kumbh-sans min-h-screen">
     <MobileMenu :isOpen="mobileMenuOpen" @close="mobileMenuOpen = false" />
     <Header
       :mobileMenuOpen="mobileMenuOpen"
       :cartOpen="cartOpen"
+      :cartItems="cartItems"
       :totalQuantity="totalQuantity"
-      @toggle-mobile-menu="mobileMenuOpen = !mobileMenuOpen"
-      @toggle-cart="cartOpen = !cartOpen"
+      @toggleMobileMenu="mobileMenuOpen = !mobileMenuOpen"
+      @toggleCart="cartOpen = !cartOpen"
+      @removeFromCart="removeFromCart"
     />
     <Main
       :cartOpen="cartOpen"
       :cartItems="cartItems"
-      @add-to-cart="addToCart"
-      @remove-from-cart="removeFromCart"
+      @addToCart="addToCart"
+      @removeFromCart="removeFromCart"
     />
   </div>
 </template>
