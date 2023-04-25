@@ -66,15 +66,15 @@ export default defineComponent({
       :cartOpen="cartOpen"
       :cartItems="cartItems"
       :totalQuantity="totalQuantity"
-      @toggle-mobile-menu="mobileMenuOpen = !mobileMenuOpen"
-      @toggle-cart="cartOpen = !cartOpen"
-      @remove-from-cart="removeFromCart"
+      @toggleMobileMenu="mobileMenuOpen = !mobileMenuOpen"
+      @toggleCart="cartOpen = !cartOpen"
+      @removeFromCart="removeFromCart"
     />
     <Main
       :cartOpen="cartOpen"
       :cartItems="cartItems"
-      @add-to-cart="addToCart"
-      @remove-from-cart="removeFromCart"
+      @addToCart="addToCart"
+      @removeFromCart="removeFromCart"
     />
   </div>
 </template>
