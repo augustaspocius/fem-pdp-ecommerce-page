@@ -76,7 +76,7 @@ export default {
         <img
           v-for="(image, index) in images"
           :key="index"
-          class="w-full max-w-[88px] rounded-xl border-2 border-transparent hover:border-primary-orange hover:cursor-pointer hover:opacity-50"
+          class="w-full min-w-0 rounded-xl border-2 border-transparent hover:border-primary-orange hover:cursor-pointer hover:opacity-50"
           :src="image"
           alt="product"
         />
