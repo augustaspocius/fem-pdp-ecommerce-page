@@ -4,11 +4,11 @@ export default {
   components: {
     Lightbox,
   },
-  data(): { lightboxOpen: boolean, currentSlide: number, images: string[] } {
+  data(): { lightboxOpen: boolean; currentSlide: number; productImages: string[] } {
     return {
       lightboxOpen: false,
       currentSlide: 0,
-      images: [
+      productImages: [
         "/src/assets/image-product-1.jpg",
         "/src/assets/image-product-2.jpg",
         "/src/assets/image-product-3.jpg",
@@ -50,23 +50,33 @@ export default {
 };
 </script>
 <template>
-  <Lightbox :currentSlide="currentSlide" :images="images" :isOpen="lightboxOpen" 
-          @close="lightboxOpen = false"
-          @nextSlide="currentSlide = nextSlide(currentSlide, images)" 
-          @previousSlide="currentSlide = previousSlide(currentSlide, images)" 
-          @selectThumbnail="currentSlide = selectSlide($event)" />
-
+  <Lightbox
+    :currentSlide="currentSlide"
+    :images="productImages"
+    :isLightboxOpen="lightboxOpen"
+    @close="lightboxOpen = false"
+    @nextSlide="currentSlide = nextSlide(currentSlide, productImages)"
+    @previousSlide="currentSlide = previousSlide(currentSlide, productImages)"
+    @selectThumbnail="currentSlide = selectSlide($event)"
+  />
+  
   <div class="relative w-full overflow-x-hidden">
     <div class="w-full whitespace-nowrap" :style="slideStyles">
-      <img v-for="(image, index) in images" :key="index" class="w-full h-full inline-block 
-                  md:rounded-xl md:cursor-pointer" :src="image" alt="product" @click="lightboxOpen = openLightbox(lightboxOpen)" />
+      <img
+        v-for="(image, index) in productImages"
+        :key="index"
+        class="w-full h-full inline-block md:rounded-xl md:cursor-pointer"
+        :src="image"
+        alt="product"
+        @click="lightboxOpen = openLightbox(lightboxOpen)"
+      />
     </div>
 
     <!-- Left button -->
     <button
       class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center
              md:hidden"
-      @click="currentSlide = previousSlide(currentSlide, images)"
+      @click="currentSlide = previousSlide(currentSlide, productImages)"
     >
       <img src="/src/assets/icon-previous.svg" alt="icon previous" />
     </button>
@@ -74,7 +84,7 @@ export default {
     <button
       class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center
              md:hidden"
-      @click="currentSlide = nextSlide(currentSlide, images)"
+      @click="currentSlide = nextSlide(currentSlide, productImages)"
     >
       <img src="/src/assets/icon-next.svg" alt="icon next" />
     </button>
@@ -82,10 +92,10 @@ export default {
 
   <div class="hidden w-full md:flex pt-8 gap-8">
     <img
-      v-for="(image, index) in images"
+      v-for="(image, index) in productImages"
       :key="index"
       class="w-full min-w-0 rounded-xl border-2 border-transparent hover:cursor-pointer hover:opacity-50"
-      :class="{ 'border-primary-orange opacity-50': currentSlide === index }"
+      :class="{ 'md:border-primary-orange opacity-50': currentSlide === index }"
       :src="image"
       alt="product"
       @click="currentSlide = selectSlide(index)"
