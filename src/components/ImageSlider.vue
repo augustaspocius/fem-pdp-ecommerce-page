@@ -12,30 +12,30 @@ export default {
     };
   },
   computed: {
-    slideStyles(): { [key: string]: string } {
+    slideStyles(): { transform: string } {
       return {
         transform: `translateX(-${this.currentSlide * 100}%)`,
       };
     },
   },
-  methods: {
-    nextSlide(): void {
-      if (this.currentSlide < this.images.length - 1) {
-        this.currentSlide++;
-      } else {
-        this.currentSlide = 0;
-      }
-    },
-    previousSlide(): void {
-      if (this.currentSlide > 0) {
-        this.currentSlide--;
-      } else {
-        this.currentSlide = this.images.length - 1;
-      }
-    },
-    selectSlide(index: number): void {
-      this.currentSlide = index;
-    },
+  setup() {
+    const nextSlide = (currentSlide: number, images: string[]): number => {
+      return currentSlide < images.length - 1 ? currentSlide + 1 : 0;
+    };
+
+    const previousSlide = (currentSlide: number, images: string[]): number => {
+      return currentSlide > 0 ? currentSlide - 1 : images.length - 1;
+    };
+
+    const selectSlide = (index: number): number => {
+      return index;
+    };
+
+    return {
+      nextSlide,
+      previousSlide,
+      selectSlide,
+    };
   },
 };
 </script>
@@ -59,7 +59,7 @@ export default {
     <button
       class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center
              md:hidden"
-      @click="previousSlide"
+      @click="currentSlide = previousSlide(currentSlide, images)"
     >
       <img src="/src/assets/icon-previous.svg" alt="icon previous" />
     </button>
@@ -67,7 +67,7 @@ export default {
     <button
       class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full w-10 h-10 flex justify-center items-center
              md:hidden"
-      @click="nextSlide"
+      @click="currentSlide = nextSlide(currentSlide, images)"
     >
       <img src="/src/assets/icon-next.svg" alt="icon next" />
     </button>
@@ -81,7 +81,7 @@ export default {
       :class="{ 'border-primary-orange opacity-50': currentSlide === index }"
       :src="image"
       alt="product"
-      @click="selectSlide(index)"
+      @click="currentSlide = selectSlide(index)"
     />
   </div>
 </template>
